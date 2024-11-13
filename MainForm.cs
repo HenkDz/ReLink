@@ -200,13 +200,12 @@ namespace ReLink
         }
 
 
-        private void tsbAbout_Click(object sender, EventArgs e) {
-            new Process() {
-                StartInfo =
-                new ProcessStartInfo() {
-                    FileName = "http://getrelink.com"
-                }
-            }.Start();
+        private void tsbAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("ReLink - A browser management tool.\nVisit http://getrelink.com for more information.",
+                            "About ReLink",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
         }
 
         private void tsbSave_Click(object sender, EventArgs e) {
@@ -347,9 +346,18 @@ namespace ReLink
 
             BrowserInfo[] browsers = BrowserManager.Browsers;
 
-            foreach (BrowserInfo browser in browsers) {
-                imlBrowsers.Images.Add(browser.Name, browser.Icon);
-                dropdownBox.Items.Add(new ImageComboBoxItem(imlBrowsers.Images.IndexOfKey(browser.Name), browser.Name, 0));
+            foreach (BrowserInfo browser in browsers)
+            {
+                if (browser.Icon is Icon)
+                {
+                    imlBrowsers.Images.Add(browser.Name, browser.Icon);
+                    dropdownBox.Items.Add(new ImageComboBoxItem(imlBrowsers.Images.IndexOfKey(browser.Name), browser.Name, 0));
+                }
+                else
+                {
+                    // Handle the case where the icon is not valid
+                    Console.WriteLine($"Invalid icon for browser: {browser.Name}");
+                }
             }
 
             if (dropdownBox.Items.Count > 0) {

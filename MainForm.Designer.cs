@@ -1,5 +1,7 @@
 ﻿namespace ReLink
 {
+    using ImageComboBox;
+
     partial class MainForm
     {
         /// <summary>
@@ -43,11 +45,11 @@
             this.lblDefaultDesc = new System.Windows.Forms.Label();
             this.chkUseDefault = new System.Windows.Forms.CheckBox();
             this.grpDefaultsSection = new System.Windows.Forms.GroupBox();
-            this.cboDefaultBrowser = new ImageComboBox.ImageComboBox();
+            this.cboDefaultBrowser = new ImageComboBox();
             this.imlBrowsers = new System.Windows.Forms.ImageList(this.components);
             this.grpRulesSection = new System.Windows.Forms.GroupBox();
-            this.cboMatchType = new ImageComboBox.ImageComboBox();
-            this.cboBrowser = new ImageComboBox.ImageComboBox();
+            this.cboMatchType = new ImageComboBox();
+            this.cboBrowser = new ImageComboBox();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.btnMoveUp = new System.Windows.Forms.Button();
             this.btnRemoveUrl = new System.Windows.Forms.Button();
@@ -437,8 +439,8 @@
         private System.Windows.Forms.GroupBox grpRulesSection;
         private System.Windows.Forms.ImageList imlButtons;
         private System.Windows.Forms.ImageList imlBrowsers;
-        private ImageComboBox.ImageComboBox cboDefaultBrowser;
-        private ImageComboBox.ImageComboBox cboBrowser;
+        private ImageComboBox cboDefaultBrowser;
+        private ImageComboBox cboBrowser;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbRegister;
         private System.Windows.Forms.ToolStripButton tsbUnregister;
@@ -447,7 +449,7 @@
         private System.Windows.Forms.ToolStripButton tsbAbout;
         private System.Windows.Forms.ToolStripButton tsbSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private ImageComboBox.ImageComboBox cboMatchType;
+        private ImageComboBox cboMatchType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSerial;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMatchType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUrl;

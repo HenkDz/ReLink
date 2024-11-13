@@ -21,13 +21,27 @@ namespace ReLink {
             InitRules();
         }
 
-        private static void InitBrowsers() {
+        private static void InitBrowsers()
+        {
             browsers = BrowserManager.GetRegisteredBrowsers();
 
-            //Edge quirk
-            try {
-                GetBrowserByType(BrowserType.EdgeLegacy).ExePath = "microsoft-edge:";
-            } catch { }
+            // Log the browsers array to check its contents
+            foreach (var browser in browsers)
+            {
+                Console.WriteLine($"Browser: {browser.Name}, Type: {browser.BrowserType}, ExePath: {browser.ExePath}");
+            }
+
+            // Edge (if installed) quirk
+            var edgeLegacy = GetBrowserByType(BrowserType.EdgeLegacy);
+            if (edgeLegacy != null)
+            {
+                edgeLegacy.ExePath = "microsoft-edge:";
+                edgeLegacy.ExePath = "microsoft-edge:";
+            }
+            else
+            {
+                Console.WriteLine("Edge Legacy browser not found.");
+            }
         }
 
         private static void InitRules() {
@@ -143,6 +157,9 @@ namespace ReLink {
         }
 
         internal static void GetBrowserInfoFromAppId(string appId, out BrowserType browserType, out string browserName) {
+            // Log the appId to see what IDs are being returned
+            Console.WriteLine($"Detected App ID: {appId}");
+
             if (string.IsNullOrWhiteSpace(appId) || appId.Contains("IE.HTTP")) {
                 browserType = BrowserType.InternetExplorer;
                 browserName = "Internet Explorer";
@@ -152,27 +169,36 @@ namespace ReLink {
             } else if (appId.Contains("MSEdgeHTM")) {
                 browserType = BrowserType.Edge;
                 browserName = "Edge";
-            } else if (appId.Contains("Firefox")) {
-                browserType = BrowserType.Firefox;
-                browserName = "Firefox";
+            } else if (appId.StartsWith("FirefoxURL-")) {
+                // Check for specific Firefox App IDs
+                if (appId.Contains("CA9422711")) {
+                    browserType = BrowserType.Firefox;
+                    browserName = "Firefox Dev Edition";
+                } else if (appId.Contains("308046B0A")) {
+                    browserType = BrowserType.Firefox;
+                    browserName = "Firefox";
+                } else {
+                    browserType = BrowserType.Firefox;
+                    browserName = "Firefox (Unknown Version)";
+                }
             } else if (appId.Contains("Chrome")) {
-                browserType = BrowserType.Chrome;
-                browserName = "Chrome";
-            } else if (appId.Contains("Opera")) {
-                browserType = BrowserType.Opera;
-                browserName = "Opera";
-            } else if (appId.Contains("Safari")) {
-                browserType = BrowserType.Safari;
-                browserName = "Safari";
-            } else if (appId.Contains("Brave")) {
+                // Check for specific Chrome App IDs
+                if (appId.Contains("BHTM")) {
+                    browserType = BrowserType.Chrome;
+                    browserName = "Chrome Beta";
+                } else {
+                    browserType = BrowserType.Chrome;
+                    browserName = "Chrome";
+                }
+            } else if (appId.Contains("BraveHTML")) {
                 browserType = BrowserType.Brave;
                 browserName = "Brave";
-            } else if (appId.Contains("ChromiumHTM.CDR3CLVQ567AB7Y3475B63PFYE")) {
-                browserType = BrowserType.Sidekick;
-                browserName = "Sidekick";
+            } else if (appId.Contains("VivaldiHTM")) {
+                browserType = BrowserType.Unknown;
+                browserName = "Vivaldi";
             } else {
                 browserType = BrowserType.Unknown;
-                browserName = appId;
+                browserName = appId; // Set the browser name to the appId for logging
             }
         }
 
